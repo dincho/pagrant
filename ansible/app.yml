@@ -5,14 +5,25 @@
   vars:
     project_path: /app
     bower_path: bower
-    composer_path: /app/composer
-    composer_home_owner: vagrant
-    composer_home_group: vagrant
+    extra_path: ./vendor/bin
 
   roles:
-    - kosssi.composer
+    - { role: kosssi.composer, become: true }
 
   tasks:
+    - name: "Add {{ extra_path }} to path"
+      lineinfile:
+        dest: ~/.profile
+        state: present
+        backrefs: yes
+        regexp: '^PATH=(["]*)((?!.*?{{ extra_path }}).*?)(["]*)$'
+        line: 'PATH=\1\2:{{ extra_path }}\3'
+
+    - name: Add composer github token
+      command: >
+        {{ composer_path }} config --global github-oauth.github.com {{ composer_github_oauth }}
+      when: composer_github_oauth != false
+
     - name: Install asset dependencies
       command: >
         {{ bower_path }} install --production --silent
@@ -22,12 +33,6 @@
 
     - name: Install composer dependencies
       command: >
-        {{ project_path }}/composer install --no-interaction
-      args:
-        chdir: "{{ project_path }}"
-
-    - name: Build application
-      command: >
-        {{ project_path }}/composer build --no-interaction
+        {{ composer_path }} install --no-interaction
       args:
         chdir: "{{ project_path }}"
