@@ -1,0 +1,11 @@
+pagrant:
+    sync:
+        exclude:
+            - app/bootstrap*
+            - vendor/*
+            - "*/logs/*"
+            - "*/cache/*"
+            - web/uploads/*
+            - web/bundles/*
+            - bower_components/
+            - node_modules/*

@@ -1,0 +1,33 @@
+---
+- name: Install the application
+  hosts: all
+
+  vars:
+    project_path: /app
+    bower_path: bower
+    composer_path: /app/composer
+    composer_home_owner: vagrant
+    composer_home_group: vagrant
+
+  roles:
+    - kosssi.composer
+
+  tasks:
+    - name: Install asset dependencies
+      command: >
+        {{ bower_path }} install --production --silent
+      args:
+        chdir: "{{ project_path }}"
+        creates: "{{ project_path }}/bower_components"
+
+    - name: Install composer dependencies
+      command: >
+        {{ project_path }}/composer install --no-interaction
+      args:
+        chdir: "{{ project_path }}"
+
+    - name: Build application
+      command: >
+        {{ project_path }}/composer build --no-interaction
+      args:
+        chdir: "{{ project_path }}"
