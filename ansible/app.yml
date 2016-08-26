@@ -22,7 +22,7 @@
     - name: Add composer github token
       command: >
         {{ composer_path }} config --global github-oauth.github.com {{ composer_github_oauth }}
-      when: composer_github_oauth != false
+      when: composer_github_oauth != "" and composer_github_oauth != false
 
     - name: Install asset dependencies
       command: >
