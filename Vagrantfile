@@ -51,31 +51,31 @@ Vagrant.configure(2) do |config|
   config.vm.define "dev", primary: true do |node|
     PROJECT_NAME = File.basename(File.expand_path("..", Dir.pwd))
     node.vm.hostname = PROJECT_NAME + ".dev"
-    node.vm.synced_folder ".", "/vagrant", type: user_config.sync.type
-    node.vm.synced_folder "..", "/app", type: user_config.sync.type,
-      rsync__exclude: user_config.sync.exclude
+    node.vm.synced_folder ".", "/vagrant", type: user_config["sync"]["type"]
+    node.vm.synced_folder "..", "/app", type: user_config["sync"]["type"],
+      rsync__exclude: user_config["sync"]["exclude"]
 
     node.vm.provider "virtualbox" do |vm, override|
       override.vm.box = "ubuntu/trusty32"
       vm.name = node.vm.hostname
-      vm.cpus = user_config.cpus
-      vm.memory = user_config.mem
+      vm.cpus = user_config["cpus"]
+      vm.memory = user_config["mem"]
     end
 
     node.vm.provider "parallels" do |vm, override|
       override.vm.box = "parallels/ubuntu-14.04-i386"
       vm.name = node.vm.hostname
-      vm.cpus = user_config.cpus
-      vm.memory = user_config.mem
+      vm.cpus = user_config["cpus"]
+      vm.memory = user_config["mem"]
       vm.customize ["set", :id, "--time-sync", "on"]
     end
 
     node.vm.provider "hyperv" do |vm, override|
       override.vm.box = "ericmann/trusty64"
       vm.vmname = node.vm.hostname
-      vm.cpus = user_config.cpus
+      vm.cpus = user_config["cpus"]
       vm.memory = 512
-      vm.maxmemory = user_config.mem
+      vm.maxmemory = user_config["mem"]
     end
 
     node.vm.provision "ansible_local" do |ansible|
@@ -83,7 +83,7 @@ Vagrant.configure(2) do |config|
       ansible.galaxy_role_file = "requirements.yml"
       ansible.playbook = "setup.yml"
       ansible.extra_vars = {
-        composer_github_oauth: user_config.github.oauth_token
+        composer_github_oauth: user_config["github"]["oauth_token"]
       }
     end
 
