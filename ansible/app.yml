@@ -24,15 +24,25 @@
         {{ composer_path }} config --global github-oauth.github.com {{ composer_github_oauth }}
       when: composer_github_oauth != "" and composer_github_oauth != false
 
+    - name: Stat bower.json
+      stat: path="{{ project_path }}/bower.json"
+      register: bower_json
+
     - name: Install asset dependencies
       command: >
         {{ bower_path }} install --production --silent
       args:
         chdir: "{{ project_path }}"
         creates: "{{ project_path }}/bower_components"
+      when: bower_json.stat.exists == True
+
+    - name: Stat composer.lock
+      stat: path="{{ project_path }}/composer.lock"
+      register: composer_lock
 
     - name: Install composer dependencies
       command: >
         {{ composer_path }} install --no-interaction
       args:
         chdir: "{{ project_path }}"
+      when: composer_lock.stat.exists == True
