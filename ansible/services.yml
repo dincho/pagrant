@@ -20,7 +20,6 @@
       - php5-intl
       - php5-curl
       - php5-imagick
-      - php5-xdebug
       - php5-sqlite
 
     php_fpm_pools:
