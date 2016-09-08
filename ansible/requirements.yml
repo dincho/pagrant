@@ -1,4 +1,4 @@
-- src: nbz4live.php-fpm
+- name: dincho.php-fpm
   version: master
 - src: jdauphant.nginx
 - src: dincho.percona-server

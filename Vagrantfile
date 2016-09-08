@@ -56,14 +56,14 @@ Vagrant.configure(2) do |config|
       rsync__exclude: user_config["sync"]["exclude"]
 
     node.vm.provider "virtualbox" do |vm, override|
-      override.vm.box = "ubuntu/trusty32"
+      override.vm.box = "bento/ubuntu-16.04"
       vm.name = node.vm.hostname
       vm.cpus = user_config["cpus"]
       vm.memory = user_config["mem"]
     end
 
     node.vm.provider "parallels" do |vm, override|
-      override.vm.box = "parallels/ubuntu-14.04-i386"
+      override.vm.box = "bento/ubuntu-16.04"
       vm.name = node.vm.hostname
       vm.cpus = user_config["cpus"]
       vm.memory = user_config["mem"]
@@ -71,7 +71,7 @@ Vagrant.configure(2) do |config|
     end
 
     node.vm.provider "hyperv" do |vm, override|
-      override.vm.box = "ericmann/trusty64"
+      override.vm.box = "kmm/ubuntu-xenial64"
       vm.vmname = node.vm.hostname
       vm.cpus = user_config["cpus"]
       vm.memory = 512
