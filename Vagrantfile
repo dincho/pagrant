@@ -79,6 +79,8 @@ Vagrant.configure(2) do |config|
       }
     end
 
-    node.vm.post_up_message = "Project URL: http://" + PROJECT_NAME + ".dev/app_dev.php"
+    if Vagrant.has_plugin?("HostManager")
+        node.vm.post_up_message = "Project URL: http://" + PROJECT_NAME + ".dev/app_dev.php"
+    end
   end
 end
