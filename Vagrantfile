@@ -55,7 +55,7 @@ Vagrant.configure(2) do |config|
     end
 
     node.vm.provider "parallels" do |vm, override|
-      override.vm.box = "bento/ubuntu-16.04"
+      override.vm.box = "parallels/ubuntu-16.04"
       vm.name = node.vm.hostname
       vm.cpus = user_config["cpus"]
       vm.memory = user_config["mem"]
