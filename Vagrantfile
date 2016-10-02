@@ -70,6 +70,9 @@ Vagrant.configure(2) do |config|
       vm.maxmemory = user_config["mem"]
     end
 
+    config.vm.provision 'Wait for unattended-upgrades', type: 'shell', 
+        path: './ansible/wait.sh', args: %w( dpkg apt unattended-upgrade )
+
     node.vm.provision "ansible_local" do |ansible|
       ansible.provisioning_path = "/vagrant/ansible"
       ansible.galaxy_role_file = "requirements.yml"
