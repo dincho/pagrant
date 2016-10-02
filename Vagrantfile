@@ -4,15 +4,7 @@ Vagrant.configure(2) do |config|
     config.hostmanager.manage_host = true
     # Custom resolver for hostmanager and DHCP
     config.hostmanager.ip_resolver = proc do |machine|
-      result = ""
-
-      begin
-        machine.communicate.execute("ifconfig eth1") do |type, data|
-          result << data if type == :stdout
-        end
-        (ip = /^\s*inet .*?(\d+\.\d+\.\d+\.\d+)\s+/.match(result)) && ip[1]
-      rescue
-      end
+      machine.ssh_info[:host]
     end
   end
 
