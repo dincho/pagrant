@@ -23,6 +23,14 @@
       - php-sqlite3
       - php-xml
       - php-zip
+      - php-soap
+      - php-gd
+      - php-ldap
+      - php-bcmath
+      - php-mbstring
+      - php-pgsql
+      - php-mcrypt
+      - php-tidy
 
     php_fpm_pools:
       - name: vagrant
