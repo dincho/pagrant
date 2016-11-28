@@ -1,10 +1,10 @@
 pagrant:
     sync:
         exclude:
-            - app/bootstrap*
             - vendor/*
-            - "*/logs/*"
-            - "*/cache/*"
+            - app/logs/*
+            - app/cache/*
+            - app/bootstrap*
             - web/uploads/*
             - web/bundles/*
             - bower_components/
