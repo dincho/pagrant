@@ -74,7 +74,7 @@
          - fastcgi_buffers 16 16k
          - fastcgi_buffer_size 32k
          - "location / { try_files $uri /app.php$is_args$args; }"
-         -  location ~ ^/(app|app_dev|config)\.php(/|$) {
+         -  location ~ ^/(app|app_dev|config|install)\.php(/|$) {
             fastcgi_pass unix:/var/run/php/fpm-vagrant.sock;
             fastcgi_split_path_info ^(.+\.php)(/.*)$;
             include fastcgi_params;
