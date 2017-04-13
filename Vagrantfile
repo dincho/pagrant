@@ -20,6 +20,9 @@ Vagrant.configure(2) do |config|
   else
     cpus = `wmic cpu get NumberOfCores`.split("\n")[2].to_i / 2
     mem = `wmic OS get TotalVisibleMemorySize`.split("\n")[2].to_i / 1024 / 4
+	if (mem % 2 != 0)
+	  mem = mem + 1
+	end
   end
 
   user_config = {
