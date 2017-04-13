@@ -20,6 +20,10 @@ Vagrant.configure(2) do |config|
   else
     cpus = `wmic cpu get NumberOfCores`.split("\n")[2].to_i / 2
     mem = `wmic OS get TotalVisibleMemorySize`.split("\n")[2].to_i / 1024 / 4
+	# hyperv requires even number for maxmemory
+	if (mem % 2 != 0)
+		mem = mem + 1
+	end
   end
 
   user_config = {
