@@ -32,6 +32,7 @@
       - php-mcrypt
       - php-tidy
       - php-phpdbg
+      - php-ast
 
     php_fpm_pools:
       - name: vagrant
