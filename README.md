@@ -33,6 +33,8 @@ Create ~/.vagrantuser for user wide configuration, e.g:
 pagrant:
   cpus: 2 # defaults to host cores / 2
   mem: 1024 # defaults to host memory / 4
+  min_mem: 1024 # hyper-v only, default mem = min_mem to turn off dynamic memory
+  differencing_disk: false # hyper-v only, defaults to true
   github:
     oauth_token: your_github_token
   sync:
