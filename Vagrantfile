@@ -28,6 +28,8 @@ Vagrant.configure(2) do |config|
   user_config = {
     "cpus" => cpus,
     "mem" => mem,
+    "min_mem" => mem,
+    "differencing_disk" => true,
     "sync" => {
       "type" => "rsync",
       "exclude" => []
@@ -69,8 +71,9 @@ Vagrant.configure(2) do |config|
       override.vm.box = "kmm/ubuntu-xenial64"
       vm.vmname = node.vm.hostname
       vm.cpus = user_config["cpus"]
-      vm.memory = 512
+      vm.memory = user_config["min_mem"]
       vm.maxmemory = user_config["mem"]
+      vm.differencing_disk = true
     end
 
     config.vm.provision 'Wait for unattended-upgrades', type: 'shell', 
