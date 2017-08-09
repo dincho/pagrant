@@ -16,7 +16,7 @@ install:
 script:
   - ansible --version
 
-  - ansible-galaxy install -r requirements.yml  -p roles
+  - ansible-galaxy install -r ansible/requirements.yml  -p ansible/roles
 
   # Check the role/playbook's syntax.
   - ansible-playbook -i localhost, --connection=local ansible/services.yml --syntax-check
