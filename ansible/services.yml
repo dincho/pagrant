@@ -98,6 +98,7 @@
        - nodejs-legacy
        - npm
        - git
+       - imagemagick
 
     - name: Install bower & yarn
       npm: name={{ item }} global=yes state=present
