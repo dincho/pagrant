@@ -1,9 +1,13 @@
 pagrant:
     sync:
         exclude:
+            - .vagrant/
+            - .git/
             - vendor/*
             - app/logs/*
+            - var/logs/*
             - app/cache/*
+            - var/cache/*
             - app/bootstrap*
             - web/uploads/*
             - web/bundles/*
