@@ -46,6 +46,8 @@ pagrant:
 
 Per project configuration can also be set by creating /path/to/project/.vagrantuser
 
+Customize `.profile` with scripts to run on interactive bash logins.
+
 ## Suggestions
 
 If [vagrant-hostmanager](https://github.com/devopsgroup-io/vagrant-hostmanager) plugin is installed 
