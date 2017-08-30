@@ -73,7 +73,7 @@ Vagrant.configure(2) do |config|
       vm.cpus = user_config["cpus"]
       vm.memory = user_config["mem"]
       vm.maxmemory = user_config["max_mem"]
-      vm.differencing_disk = true
+      vm.differencing_disk = user_config["differencing_disk"]
     end
 
     config.vm.provision 'Wait for unattended-upgrades', type: 'shell', 
