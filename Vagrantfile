@@ -32,7 +32,20 @@ Vagrant.configure(2) do |config|
     "differencing_disk" => true,
     "sync" => {
       "type" => "rsync",
-      "exclude" => []
+      "exclude" => [
+        ".vagrant/"
+        ".git/"
+        "vendor/*"
+        "app/logs/*"
+        "var/logs/*"
+        "app/cache/*"
+        "var/cache/*"
+        "app/bootstrap*"
+        "web/uploads/*"
+        "web/bundles/*"
+        "bower_components/"
+        "node_modules/*"
+      ]
     },
     "github" => {
       "oauth_token" => ""

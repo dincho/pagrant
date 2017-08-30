@@ -1,2 +1,3 @@
+.vagrantuser
 .vagrant/
 ansible/roles
