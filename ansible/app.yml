@@ -19,6 +19,12 @@
         regexp: '^PATH=(["]*)((?!.*?{{ extra_path }}).*?)(["]*)$'
         line: 'PATH=\1\2:{{ extra_path }}\3'
 
+    - name: "Change dir to {{ project_path }} on login"
+      lineinfile:
+        dest: ~/.profile
+        state: present
+        line: 'cd {{ project_path }}'
+
     - name: Add composer github token
       command: >
         {{ composer_path }} config --global github-oauth.github.com {{ composer_github_oauth }}
@@ -46,3 +52,11 @@
       args:
         chdir: "{{ project_path }}"
       when: composer_lock.stat.exists == True
+
+    - name: "Stat {{ project_path }}/ansible_dev.yml"
+      stat: path="{{ project_path }}/ansible_dev.yml"
+      register: projecttasks
+
+    - include: "{{ project_path }}/ansible_dev.yml"
+      tags: projecttasks
+      when: projecttasks.stat.exists == True

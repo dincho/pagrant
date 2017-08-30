@@ -13,7 +13,7 @@ LEMP Vagrant configuration
 ## Installation
 
 ```bash
-cd /path/to/your/project
+cd <path_to_project>
 git submodule add git@github.com:dincho/pagrant.git vagrant
 cd vagrant
 vagrant up
@@ -54,7 +54,7 @@ pagrant:
       - node_modules/*
 ```
 
-Per project configuration can be set by creating `<<path_to_project>>/<<pagrant_submodule>>/.vagrantuser`.
+Per project configuration can be set by creating `<path_to_project>/<pagrant_submodule>/.vagrantuser`.
 
 E.g. `/cool_project/vagrant/.vagrantuser`:
 
@@ -83,4 +83,20 @@ you can access your project with your_project.dev hostname
 
 ```bash
 vagrant plugin install vagrant-hostmanager
+```
+
+
+## Ansible tasks per project
+
+You can include ansible tasks per project by creating `<path_to_project>/ansible_dev.yml` file which will be included in provisioning
+
+E.g.:
+
+```
+-----
+- name: Install additional libs
+  apt: pkg={{ item }} state=installed
+  with_items:
+   - imagemagick
+   - unzip
 ```
