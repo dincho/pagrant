@@ -54,9 +54,9 @@ pagrant:
       - node_modules/*
 ```
 
-Per project configuration should be set by creating `/<<path_to_project>>/vagrant/.vagrantuser`.
+Per project configuration can be set by creating `<<path_to_project>>/<<pagrant_submodule>>/.vagrantuser`.
 
-E.g.:
+E.g. `/cool_project/vagrant/.vagrantuser`:
 
 ```yml
 pagrant:
