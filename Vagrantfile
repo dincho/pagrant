@@ -33,17 +33,17 @@ Vagrant.configure(2) do |config|
     "sync" => {
       "type" => "rsync",
       "exclude" => [
-        ".vagrant/"
-        ".git/"
-        "vendor/*"
-        "app/logs/*"
-        "var/logs/*"
-        "app/cache/*"
-        "var/cache/*"
-        "app/bootstrap*"
-        "web/uploads/*"
-        "web/bundles/*"
-        "bower_components/"
+        ".vagrant/",
+        ".git/",
+        "vendor/*",
+        "app/logs/*",
+        "var/logs/*",
+        "app/cache/*",
+        "var/cache/*",
+        "app/bootstrap*",
+        "web/uploads/*",
+        "web/bundles/*",
+        "bower_components/",
         "node_modules/*"
       ]
     },
