@@ -92,12 +92,13 @@
     - dincho.elasticsearch
 
   tasks:
-    - name: Install nodejs, npm, git
+    - name: Install dev tools
       apt: pkg={{ item }} state=installed
       with_items:
        - nodejs-legacy
        - npm
        - git
+       - imagemagick
 
     - name: Install bower & yarn
       npm: name={{ item }} global=yes state=present
