@@ -92,7 +92,7 @@
     - dincho.elasticsearch
 
   tasks:
-    - name: Install nodejs, npm, git
+    - name: Install dev tools
       apt: pkg={{ item }} state=installed
       with_items:
        - nodejs-legacy
