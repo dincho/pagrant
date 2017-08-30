@@ -89,8 +89,8 @@ Vagrant.configure(2) do |config|
       vm.differencing_disk = user_config["differencing_disk"]
     end
 
-    config.vm.provision 'Wait for unattended-upgrades', type: 'shell', 
-        path: './ansible/wait.sh', args: %w( dpkg apt unattended-upgrade )
+    config.vm.provision 'Stop unattended-upgrades', type: 'shell',
+        path: './ansible/apt-kill.sh'
 
     node.vm.provision "ansible_local" do |ansible|
       ansible.provisioning_path = "/vagrant/ansible"
