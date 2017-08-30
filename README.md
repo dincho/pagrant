@@ -27,7 +27,7 @@ Using [Nugrant](https://github.com/maoueh/nugrant) Vagrant plugin configuration 
 vagrant plugin install nugrant
 ```
 
-Create ~/.vagrantuser for user wide configuration, e.g:
+Create `~/.vagrantuser` for user wide configuration, e.g:
 
 ```yml
 pagrant:
@@ -39,12 +39,42 @@ pagrant:
     oauth_token: your_github_token
   sync:
     type: parallels #defaults to rsync
-    exclude: # defaults to empty array
+    exclude: # defaults to the list below
+      - .vagrant/
+      - .git/
+      - vendor/*
+      - app/logs/*
+      - var/logs/*
+      - app/cache/*
+      - var/cache/*
+      - app/bootstrap*
+      - web/uploads/*
+      - web/bundles/*
       - bower_components/
       - node_modules/*
 ```
 
-Per project configuration can also be set by creating /path/to/project/.vagrantuser
+Per project configuration should be set by creating `/<<path_to_project>>/vagrant/.vagrantuser`.
+
+E.g.:
+
+```yml
+pagrant:
+  sync:
+    exclude:
+      - .vagrant/
+      - .git/
+      - vendor/*
+      - app/logs/*
+      - var/logs/*
+      - app/cache/*
+      - var/cache/*
+      - app/bootstrap*
+      - web/uploads/*
+      - web/bundles/*
+      - bower_components/
+      - node_modules/*
+```
 
 ## Suggestions
 
