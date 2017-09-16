@@ -1,4 +1,6 @@
 Vagrant.configure(2) do |config|
+  config.ssh.forward_agent = true
+
   if Vagrant.has_plugin?("HostManager")
     config.hostmanager.enabled = true
     config.hostmanager.manage_host = true
