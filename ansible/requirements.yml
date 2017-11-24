@@ -1,5 +1,5 @@
 - name: nbz4live.php-fpm
-  version: '0.2.14'
+  version: '2.0.9'
 - src: jdauphant.nginx
   version: 'v2.9'
 - src: dincho.percona-server
