@@ -28,6 +28,7 @@ Vagrant.configure(2) do |config|
   end
 
   user_config = {
+    "hostname" => nil,
     "cpus" => cpus,
     "mem" => mem,
     "max_mem" => false,
@@ -62,7 +63,7 @@ Vagrant.configure(2) do |config|
   config.vm.network "private_network", type: "dhcp"
   config.vm.define "dev", primary: true do |node|
     PROJECT_NAME = File.basename(File.expand_path("..", Dir.pwd))
-    node.vm.hostname = PROJECT_NAME + ".dev"
+    node.vm.hostname = user_config["hostname"] ||= PROJECT_NAME + ".local"
     node.vm.synced_folder ".", "/vagrant", type: user_config["sync"]["type"]
     node.vm.synced_folder "..", "/app", type: user_config["sync"]["type"],
       rsync__exclude: user_config["sync"]["exclude"]
@@ -99,12 +100,13 @@ Vagrant.configure(2) do |config|
       ansible.galaxy_role_file = "requirements.yml"
       ansible.playbook = "setup.yml"
       ansible.extra_vars = {
+        hostname: user_config["hostname"],
         composer_github_oauth: user_config["github"]["oauth_token"]
       }
     end
 
     if Vagrant.has_plugin?("HostManager")
-        node.vm.post_up_message = "Project URL: http://" + PROJECT_NAME + ".dev/app_dev.php"
+        node.vm.post_up_message = "Project URL: http://" + user_config["hostname"] + "/app_dev.php"
     end
   end
 end
