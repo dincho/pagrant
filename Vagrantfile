@@ -100,7 +100,7 @@ Vagrant.configure(2) do |config|
       ansible.galaxy_role_file = "requirements.yml"
       ansible.playbook = "setup.yml"
       ansible.extra_vars = {
-        hostname: user_config["hostname"],
+        tld: /\.\w+$/.match(user_config["hostname"]).to_s,
         composer_github_oauth: user_config["github"]["oauth_token"]
       }
     end
