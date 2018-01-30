@@ -33,7 +33,6 @@
       - php{{php_fpm_version}}-tidy
       - php{{php_fpm_version}}-phpdbg
       - php-ast
-      - php-xdebug
 
     php_fpm_pools:
       - name: vagrant
@@ -92,10 +91,6 @@
     - dincho.elasticsearch
 
   tasks:
-    - name: Disable xdebug for CLI
-      command: >
-        phpdismod -s cli xdebug
-
     - name: Install nodejs, npm, git
       apt: pkg={{ item }} state=installed
       with_items:
