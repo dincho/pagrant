@@ -70,7 +70,7 @@
     nginx_sites:
       vagrant:
          - listen 80
-         - "server_name *{{ tld }}"
+         - "server_name {{ server_name }}"
          - root /app/web
          - access_log /var/log/nginx/vagrant.access_log
          - error_log /var/log/nginx/vagrant.error_log

@@ -96,11 +96,14 @@ Vagrant.configure(2) do |config|
         path: './ansible/apt-kill.sh'
 
     node.vm.provision "ansible_local" do |ansible|
+      hostname = user_config["hostname"]
+      server_name = "*" + /\.\w+$/.match(hostname).to_s
+      server_name = hostname if server_name == "*" || /^\d+(\.\d+){3}$/.match(hostname)
       ansible.provisioning_path = "/vagrant/ansible"
       ansible.galaxy_role_file = "requirements.yml"
       ansible.playbook = "setup.yml"
       ansible.extra_vars = {
-        tld: /\.\w+$/.match(user_config["hostname"]).to_s,
+        server_name: server_name,
         composer_github_oauth: user_config["github"]["oauth_token"]
       }
     end
