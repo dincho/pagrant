@@ -31,6 +31,7 @@ Create `~/.vagrantuser` for user wide configuration, e.g:
 
 ```yml
 pagrant:
+  hostname: cool_project.local # defaults to <project_name>.local
   cpus: 2 # defaults to host cores / 2
   mem: 1024 # defaults to host memory / 4
   max_mem: 2048 # hyper-v only, defaults to false = turn off dynamic memory
@@ -53,6 +54,9 @@ pagrant:
       - bower_components/
       - node_modules/*
 ```
+
+Note: <project_name> is the name of the directory that contains the pagrant_submodule.
+E.g. if the module is located in `/home/cool_project/vagrant/` then <project_name> will be "cool_project"
 
 Per project configuration can be set by creating `<path_to_project>/<pagrant_submodule>/.vagrantuser`.
 
@@ -78,8 +82,8 @@ pagrant:
 
 ## Suggestions
 
-If [vagrant-hostmanager](https://github.com/devopsgroup-io/vagrant-hostmanager) plugin is installed 
-you can access your project with your_project.dev hostname
+It is recommended to install [vagrant-hostmanager](https://github.com/devopsgroup-io/vagrant-hostmanager) plugin
+to automatically update your hosts file. This way you can access your project by its hostname (e.g. cool_project.local)
 
 ```bash
 vagrant plugin install vagrant-hostmanager
