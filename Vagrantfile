@@ -27,8 +27,10 @@ Vagrant.configure(2) do |config|
 	end
   end
 
+  PROJECT_NAME = File.basename(File.expand_path("..", Dir.pwd))
+
   user_config = {
-    "hostname" => nil,
+    "hostname" => PROJECT_NAME + ".local",
     "cpus" => cpus,
     "mem" => mem,
     "max_mem" => false,
@@ -62,8 +64,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.network "private_network", type: "dhcp"
   config.vm.define "dev", primary: true do |node|
-    PROJECT_NAME = File.basename(File.expand_path("..", Dir.pwd))
-    node.vm.hostname = user_config["hostname"] ||= PROJECT_NAME + ".local"
+    node.vm.hostname = user_config["hostname"]
     node.vm.synced_folder ".", "/vagrant", type: user_config["sync"]["type"]
     node.vm.synced_folder "..", "/app", type: user_config["sync"]["type"],
       rsync__exclude: user_config["sync"]["exclude"]
@@ -96,14 +97,10 @@ Vagrant.configure(2) do |config|
         path: './ansible/apt-kill.sh'
 
     node.vm.provision "ansible_local" do |ansible|
-      hostname = user_config["hostname"]
-      server_name = "*" + /\.\w+$/.match(hostname).to_s
-      server_name = hostname if server_name == "*" || /^\d+(\.\d+){3}$/.match(hostname)
       ansible.provisioning_path = "/vagrant/ansible"
       ansible.galaxy_role_file = "requirements.yml"
       ansible.playbook = "setup.yml"
       ansible.extra_vars = {
-        server_name: server_name,
         composer_github_oauth: user_config["github"]["oauth_token"]
       }
     end

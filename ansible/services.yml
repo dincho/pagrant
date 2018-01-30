@@ -36,10 +36,10 @@
       - php-ast
 
     php_fpm_pools:
-      - name: vagrant
+      - name: default
         user: vagrant
         group: vagrant
-        listen: /var/run/php/fpm-vagrant.sock
+        listen: /var/run/php/fpm-default.sock
         listen.owner: www-data
         listen.group: www-data
         listen.mode: "0660"
@@ -68,17 +68,15 @@
       - nginx
 
     nginx_sites:
-      vagrant:
-         - listen 80
-         - "server_name {{ server_name }}"
+      default:
+         - listen 80 default_server
+         - server_name _
          - root /app/web
-         - access_log /var/log/nginx/vagrant.access_log
-         - error_log /var/log/nginx/vagrant.error_log
          - fastcgi_buffers 16 16k
          - fastcgi_buffer_size 32k
          - "location / { try_files $uri /app.php$is_args$args; }"
          -  location ~ ^/(app|app_dev|config|install)\.php(/|$) {
-            fastcgi_pass unix:/var/run/php/fpm-vagrant.sock;
+            fastcgi_pass unix:/var/run/php/fpm-default.sock;
             fastcgi_split_path_info ^(.+\.php)(/.*)$;
             include fastcgi_params;
             fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
