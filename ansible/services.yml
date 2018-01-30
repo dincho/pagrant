@@ -15,24 +15,23 @@
     php_fpm_version: '7.1'
     php_fpm_apt_packages:
       - php{{php_fpm_version}}-fpm
-      - php-cli
-      - php-apcu
-      - php-mysql
-      - php-intl
-      - php-curl
-      - php-imagick
-      - php-sqlite3
-      - php-xml
-      - php-zip
-      - php-soap
-      - php-gd
-      - php-ldap
-      - php-bcmath
-      - php-mbstring
-      - php-pgsql
-      - php-mcrypt
-      - php-tidy
-      - php-phpdbg
+      - php{{php_fpm_version}}-cli
+      - php{{php_fpm_version}}-apcu
+      - php{{php_fpm_version}}-mysql
+      - php{{php_fpm_version}}-intl
+      - php{{php_fpm_version}}-curl
+      - php{{php_fpm_version}}-imagick
+      - php{{php_fpm_version}}-sqlite3
+      - php{{php_fpm_version}}-xml
+      - php{{php_fpm_version}}-zip
+      - php{{php_fpm_version}}-soap
+      - php{{php_fpm_version}}-gd
+      - php{{php_fpm_version}}-ldap
+      - php{{php_fpm_version}}-bcmath
+      - php{{php_fpm_version}}-mbstring
+      - php{{php_fpm_version}}-pgsql
+      - php{{php_fpm_version}}-tidy
+      - php{{php_fpm_version}}-phpdbg
       - php-ast
 
     php_fpm_pools:
