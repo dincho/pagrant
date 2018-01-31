@@ -92,10 +92,14 @@ E.g. `/cool_project/vagrant/.vagrantuser`:
 ```yml
 pagrant:
   extra_vars:
-    php_fpm_version: '7.2' # Change the PHP version. Default is '7.1'. Supported are 7.0, 7.1, 7.2
+    php_fpm_version: '7.2' # Define the PHP version. Default is '7.1'. Supported are 7.0, 7.1, 7.2.
 ```
 
 Note: For the supported vars you need to check the official documentation of the ansible roles which are listed in `<pagrant_submodule>/ansible/requirements.yml`
+
+**Warning: These variables are intended to be used in the initial provisioning. If you change values you might need to destroy the machine and recreate it again. Else if you try to reprovision some unexpected problems may appear. 
+
+**Warning: Hot swapping of php versions is not supported! If you change `php_fpm_version` after init and run `vagrant reload --provision` the machine will fail to initialize because the old version will not be uninstalled.
 
 ## Suggestions
 
