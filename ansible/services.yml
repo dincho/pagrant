@@ -66,9 +66,15 @@
     nginx_ubuntu_pkg:
       - nginx
 
+    nginx_configs:
+      ssl:
+         - ssl_certificate_key "{{ ssl_certs_privkey_path }}"
+         - ssl_certificate     "{{ ssl_certs_cert_path }}"
+
     nginx_sites:
       default:
          - listen 80 default_server
+         - listen 443 ssl http2
          - server_name _
          - root /app/web
          - fastcgi_buffers 16 16k
@@ -79,10 +85,10 @@
             fastcgi_split_path_info ^(.+\.php)(/.*)$;
             include fastcgi_params;
             fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-            fastcgi_param HTTPS off;
           }
 
   roles:
+    - jdauphant.ssl-certs
     - jdauphant.nginx
     - nbz4live.php-fpm
     - dincho.percona-server
