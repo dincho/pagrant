@@ -37,47 +37,48 @@ pagrant:
   max_mem: 2048 # hyper-v only, defaults to false = turn off dynamic memory
   differencing_disk: false # hyper-v only, defaults to true
   github:
-    oauth_token: your_github_token
+    oauth_token: your_github_token # Equivalent to 'composer_github_oauth' in `extra_vars`
   sync:
-    type: parallels #defaults to rsync
-    exclude: # defaults to the list below
+    type: parallels # defaults to 'rsync'
+    exclude: # defaults to the list below. You need to provide the full list
       - .vagrant/
       - .git/
       - vendor/*
       - app/logs/*
-      - var/logs/*
+      - var/*
       - app/cache/*
-      - var/cache/*
       - app/bootstrap*
       - web/uploads/*
       - web/bundles/*
+      - public/uploads/*
+      - public/bundles/*
       - bower_components/
       - node_modules/*
+  project_path: /app # Absolute path of your project root. Default is '/app'
+  extra_vars:
+    php_fpm_version: 7.1
 ```
 
-Note: <project_name> is the name of the directory that contains the pagrant_submodule.
+Note: <project_name> is the name of the directory that contains the <pagrant_submodule>.
 E.g. if the module is located in `/home/cool_project/vagrant/` then <project_name> will be "cool_project"
 
 ### Per project configuration
 
 Per project configuration can be set by creating `<path_to_project>/<pagrant_submodule>/.vagrantuser`.
 
-E.g. `/cool_project/vagrant/.vagrantuser`:
+E.g. To customize sync exclusions create `/cool_project/vagrant/.vagrantuser`:
 
 ```yml
 pagrant:
   sync:
+    # Symfony flex app
     exclude:
       - .vagrant/
       - .git/
       - vendor/*
-      - app/logs/*
-      - var/logs/*
-      - app/cache/*
-      - var/cache/*
-      - app/bootstrap*
-      - web/uploads/*
-      - web/bundles/*
+      - var/*
+      - public/uploads/*
+      - public/bundles/*
       - bower_components/
       - node_modules/*
 ```
@@ -87,19 +88,23 @@ pagrant:
 Default configuration is optimal for common use but you are able to tweak the provisioning by passing certain vars that are used in Ansbile roles and tasks.
 You can override the values you want by defining the `extra_vars` section in `.vagrantuser`.
 
-E.g. `/cool_project/vagrant/.vagrantuser`:
+E.g. for a Symfony flex project `/cool_project/vagrant/.vagrantuser`:
 
 ```yml
 pagrant:
   extra_vars:
-    php_fpm_version: '7.2' # Define the PHP version. Default is '7.1'. Supported are 7.0, 7.1, 7.2.
+    php_fpm_version: '7.2' # Define the PHP version. Default is '7.1'.
+    nginx_sites_default_root: /app/public # Absolute path of the public dir. Default is '/app/web'.
 ```
 
-Note: For the supported vars you need to check the official documentation of the ansible roles which are listed in `<pagrant_submodule>/ansible/requirements.yml`
+Notes:
 
-**Warning: These variables are intended to be used in the initial provisioning. If you change values you might need to destroy the machine and recreate it again. Else if you try to reprovision some unexpected problems may appear. 
+ * For the supported vars you need to check the official documentation of the ansible roles which are listed in `<pagrant_submodule>/ansible/requirements.yml`
+ * Make sure `nginx_sites_default_root` points to a subdir of `project_path`
+ * Avoid changing `extra_vars` after initial provisioning. Reprovision after changes might have unexpected results
+ * Supported php versions and packages could be found here https://launchpad.net/~ondrej/+archive/ubuntu/php/+index?field.series_filter=xenial
 
-**Warning: Hot swapping of php versions is not supported! If you change `php_fpm_version` after init and run `vagrant reload --provision` the machine will fail to initialize because the old version will not be uninstalled.
+**Warning: If you change `php_fpm_version` and reprovision with `vagrant reload --provision` you will end up with multiple php versions installed. Nginx will be reconfigured to use the updated `php_fpm_version`**
 
 ## Suggestions
 

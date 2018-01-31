@@ -35,10 +35,10 @@
       - php-ast
 
     php_fpm_pools:
-      - name: default
+      - name: "default{{php_fpm_version}}"
         user: vagrant
         group: vagrant
-        listen: /var/run/php/fpm-default.sock
+        listen: "/var/run/php/fpm-{{php_fpm_version}}.sock"
         listen.owner: www-data
         listen.group: www-data
         listen.mode: "0660"
@@ -71,21 +71,23 @@
          - ssl_certificate_key "{{ ssl_certs_privkey_path }}"
          - ssl_certificate     "{{ ssl_certs_cert_path }}"
 
+    nginx_sites_default_root: "/app/web"
+
     nginx_sites:
       default:
-         - listen 80 default_server
-         - listen 443 ssl http2
-         - server_name _
-         - root /app/web
-         - fastcgi_buffers 16 16k
-         - fastcgi_buffer_size 32k
-         - "location / { try_files $uri /app.php$is_args$args; }"
-         -  location ~ ^/(app|app_dev|config|install)\.php(/|$) {
-            fastcgi_pass unix:/var/run/php/fpm-default.sock;
-            fastcgi_split_path_info ^(.+\.php)(/.*)$;
-            include fastcgi_params;
-            fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-          }
+        - listen 80 default_server
+        - listen 443 ssl http2
+        - server_name _
+        - root {{nginx_sites_default_root}}
+        - fastcgi_buffers 16 16k
+        - fastcgi_buffer_size 32k
+        -  location / { try_files $uri /app.php$is_args$args /index.php$is_args$args; }
+           location ~ ^/(app|app_dev|config|install|index)\.php(/|$) {
+           fastcgi_pass unix:/var/run/php/fpm-{{php_fpm_version}}.sock;
+           fastcgi_split_path_info ^(.+\.php)(/.*)$;
+           include fastcgi_params;
+           fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+         }
 
   roles:
     - jdauphant.ssl-certs
