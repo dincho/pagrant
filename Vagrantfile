@@ -52,10 +52,14 @@ Vagrant.configure(2) do |config|
         "node_modules/*"
       ]
     },
+    "extra_vars" => {},
     "github" => {
       "oauth_token" => ""
     }
   }
+
+  # Backwards compatibility
+  user_config["extra_vars"]["composer_github_oauth"] ||= user_config["github"]["oauth_token"]
 
   if Vagrant.has_plugin?("nugrant")
     config.user.defaults = {'pagrant' => user_config}
@@ -97,12 +101,11 @@ Vagrant.configure(2) do |config|
         path: './ansible/apt-kill.sh'
 
     node.vm.provision "ansible_local" do |ansible|
+      ansible.compatibility_mode = "2.0"
       ansible.provisioning_path = "/vagrant/ansible"
       ansible.galaxy_role_file = "requirements.yml"
       ansible.playbook = "setup.yml"
-      ansible.extra_vars = {
-        composer_github_oauth: user_config["github"]["oauth_token"]
-      }
+      ansible.extra_vars = user_config["extra_vars"]
     end
 
     if Vagrant.has_plugin?("HostManager")
