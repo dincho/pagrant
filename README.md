@@ -58,6 +58,8 @@ pagrant:
 Note: <project_name> is the name of the directory that contains the pagrant_submodule.
 E.g. if the module is located in `/home/cool_project/vagrant/` then <project_name> will be "cool_project"
 
+### Per project configuration
+
 Per project configuration can be set by creating `<path_to_project>/<pagrant_submodule>/.vagrantuser`.
 
 E.g. `/cool_project/vagrant/.vagrantuser`:
@@ -79,6 +81,25 @@ pagrant:
       - bower_components/
       - node_modules/*
 ```
+
+### Override Ansible vars
+
+Default configuration is optimal for common use but you are able to tweak the provisioning by passing certain vars that are used in Ansbile roles and tasks.
+You can override the values you want by defining the `extra_vars` section in `.vagrantuser`.
+
+E.g. `/cool_project/vagrant/.vagrantuser`:
+
+```yml
+pagrant:
+  extra_vars:
+    php_fpm_version: '7.2' # Define the PHP version. Default is '7.1'. Supported are 7.0, 7.1, 7.2.
+```
+
+Note: For the supported vars you need to check the official documentation of the ansible roles which are listed in `<pagrant_submodule>/ansible/requirements.yml`
+
+**Warning: These variables are intended to be used in the initial provisioning. If you change values you might need to destroy the machine and recreate it again. Else if you try to reprovision some unexpected problems may appear. 
+
+**Warning: Hot swapping of php versions is not supported! If you change `php_fpm_version` after init and run `vagrant reload --provision` the machine will fail to initialize because the old version will not be uninstalled.
 
 ## Suggestions
 
