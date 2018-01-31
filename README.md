@@ -92,7 +92,7 @@ E.g. `/cool_project/vagrant/.vagrantuser`:
 ```yml
 pagrant:
   extra_vars:
-    php_fpm_version: '7.2' # Change the PHP version. Default is '7.1'. Supported are 5.6, 7.0, 7.1, 7.2
+    php_fpm_version: '7.2' # Change the PHP version. Default is '7.1'. Supported are 7.0, 7.1, 7.2
 ```
 
 Note: For the supported vars you need to check the official documentation of the ansible roles which are listed in `<pagrant_submodule>/ansible/requirements.yml`
