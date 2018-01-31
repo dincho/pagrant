@@ -2,6 +2,8 @@
   version: '2.0.9'
 - src: jdauphant.nginx
   version: 'v2.9'
+- src: jdauphant.ssl-certs
+  version: 'v1.4'
 - src: dincho.percona-server
   version: '2.0.0'
 - src: dincho.elasticsearch
