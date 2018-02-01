@@ -41,17 +41,19 @@ Vagrant.configure(2) do |config|
         ".vagrant/",
         ".git/",
         "vendor/*",
+        "var/*",
         "app/logs/*",
-        "var/logs/*",
         "app/cache/*",
-        "var/cache/*",
         "app/bootstrap*",
         "web/uploads/*",
         "web/bundles/*",
+        "public/uploads/*",
+        "public/bundles/*",
         "bower_components/",
         "node_modules/*"
       ]
     },
+    "project_path" => "/app",
     "extra_vars" => {},
     "github" => {
       "oauth_token" => ""
@@ -60,6 +62,7 @@ Vagrant.configure(2) do |config|
 
   # Backwards compatibility
   user_config["extra_vars"]["composer_github_oauth"] ||= user_config["github"]["oauth_token"]
+  user_config["extra_vars"]["project_path"] ||= user_config["project_path"]
 
   if Vagrant.has_plugin?("nugrant")
     config.user.defaults = {'pagrant' => user_config}
@@ -70,7 +73,7 @@ Vagrant.configure(2) do |config|
   config.vm.define "dev", primary: true do |node|
     node.vm.hostname = user_config["hostname"]
     node.vm.synced_folder ".", "/vagrant", type: user_config["sync"]["type"]
-    node.vm.synced_folder "..", "/app", type: user_config["sync"]["type"],
+    node.vm.synced_folder "..", user_config["extra_vars"]["project_path"], type: user_config["sync"]["type"],
       rsync__exclude: user_config["sync"]["exclude"]
 
     node.vm.provider "virtualbox" do |vm, override|
@@ -109,7 +112,7 @@ Vagrant.configure(2) do |config|
     end
 
     if Vagrant.has_plugin?("HostManager")
-        node.vm.post_up_message = "Project URL: http://" + user_config["hostname"] + "/app_dev.php"
+        node.vm.post_up_message = "Project URL: http://" + user_config["hostname"] + "/"
     end
   end
 end
