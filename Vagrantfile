@@ -27,7 +27,7 @@ Vagrant.configure(2) do |config|
 	end
   end
 
-  PROJECT_NAME = File.basename(File.expand_path("..", Dir.pwd))
+  PROJECT_NAME ||= File.basename(File.expand_path("..", Dir.pwd))
 
   user_config = {
     "hostname" => PROJECT_NAME + ".local",
@@ -60,14 +60,14 @@ Vagrant.configure(2) do |config|
     }
   }
 
-  # Backwards compatibility
-  user_config["extra_vars"]["composer_github_oauth"] ||= user_config["github"]["oauth_token"]
-  user_config["extra_vars"]["project_path"] ||= user_config["project_path"]
-
   if Vagrant.has_plugin?("nugrant")
     config.user.defaults = {'pagrant' => user_config}
     user_config = config.user.pagrant
   end
+
+  # Include additional params
+  user_config["extra_vars"]["project_path"] = user_config["project_path"]
+  user_config["extra_vars"]["composer_github_oauth"] = user_config["github"]["oauth_token"]
 
   config.vm.network "private_network", type: "dhcp"
   config.vm.define "dev", primary: true do |node|

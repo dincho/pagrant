@@ -21,26 +21,25 @@ vagrant up
 
 ## Configuration
 
-Using [Nugrant](https://github.com/maoueh/nugrant) Vagrant plugin configuration may be specified per project and per user
+Using [Nugrant](https://github.com/maoueh/nugrant) Vagrant plugin configuration may be specified per project and for the system
 
 ```bash
 vagrant plugin install nugrant
 ```
 
-Create `~/.vagrantuser` for user wide configuration, e.g:
+### System-wide configuration
+
+To provide configuration that is shared by all your projects create `<user_home_path>/.vagrantuser`. For different OS'es `<user_home_path>` varies.
+
+E.g. for MacOS/OSx it is `~/.vagrantuser`, for Windows it should be something like `C:\Users\your_username\.vagrantuser`
 
 ```yml
 pagrant:
-  hostname: cool_project.local # defaults to <project_name>.local
-  cpus: 2 # defaults to host cores / 2
-  mem: 1024 # defaults to host memory / 4
-  max_mem: 2048 # hyper-v only, defaults to false = turn off dynamic memory
-  differencing_disk: false # hyper-v only, defaults to true
   github:
-    oauth_token: your_github_token # Equivalent to 'composer_github_oauth' in `extra_vars`
+    oauth_token: your_github_token
   sync:
     type: parallels # defaults to 'rsync'
-    exclude: # defaults to the list below. You need to provide the full list
+    exclude: # List replaces the defaults if provided. Defaults to the list below.
       - .vagrant/
       - .git/
       - vendor/*
@@ -54,13 +53,7 @@ pagrant:
       - public/bundles/*
       - bower_components/
       - node_modules/*
-  project_path: /app # Absolute path of your project root. Default is '/app'
-  extra_vars:
-    php_fpm_version: 7.1
 ```
-
-Note: <project_name> is the name of the directory that contains the <pagrant_submodule>.
-E.g. if the module is located in `/home/cool_project/vagrant/` then <project_name> will be "cool_project"
 
 ### Per project configuration
 
@@ -70,9 +63,11 @@ E.g. To customize sync exclusions create `/cool_project/vagrant/.vagrantuser`:
 
 ```yml
 pagrant:
+  hostname: cool_project.local # defaults to <project_name>.local
+  project_path: /app # Absolute path of your project root. Default is '/app'
+ # For a symfony flex app
   sync:
-    # Symfony flex app
-    exclude:
+    exclude: # list replaces the system-wide config
       - .vagrant/
       - .git/
       - vendor/*
@@ -81,6 +76,23 @@ pagrant:
       - public/bundles/*
       - bower_components/
       - node_modules/*
+  # ...
+```
+
+Note: <project_name> is the name of the directory that contains the <pagrant_submodule>. E.g. if the module is located in `/home/cool_project/vagrant/` then <project_name> will be "cool_project".
+
+<project_path> is the absolute path on VM (guest) where your project files will reside and will be synced with your local (host) dir. It is best to leave it `/app`
+
+### Per VM configuration
+
+In addition you can tweak the VM config (hardware). Depending on the case configure in project's `.vagrantuser` or in the system wide '~/.vagrantuser'.
+
+```yml
+pagrant:
+  cpus: 2 # defaults to host cores / 2
+  mem: 1024 # defaults to host memory / 4
+  max_mem: 2048 # hyper-v only, defaults to false = turn off dynamic memory
+  differencing_disk: false # hyper-v only, defaults to true
 ```
 
 ### Override Ansible vars
