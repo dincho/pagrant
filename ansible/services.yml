@@ -12,6 +12,8 @@
     percona_server_server_config:
       performance_schema: "off"
 
+    nodejs_version: '6.x'
+
     php_fpm_version: '7.1'
     php_fpm_apt_packages:
       - php{{php_fpm_version}}-fpm
@@ -97,12 +99,30 @@
     - dincho.elasticsearch
 
   tasks:
-    - name: Install nodejs, npm, git
-      apt: pkg={{ item }} state=installed
+    - name: Add NodeSource apt key
+      apt_key:
+        url: "https://deb.nodesource.com/gpgkey/nodesource.gpg.key"
+        state: present
+
+    - name: Add NodeSource repositories for Node.js
+      apt_repository:
+        repo: "{{ item }}"
+        state: present
       with_items:
-       - nodejs-legacy
-       - npm
+        - "deb https://deb.nodesource.com/node_{{ nodejs_version }} {{ ansible_distribution_release }} main"
+        - "deb-src https://deb.nodesource.com/node_{{ nodejs_version }} {{ ansible_distribution_release }} main"
+      register: node_repo
+
+    - name: Update apt cache if repo was added
+      apt: update_cache=yes
+      when: node_repo.changed
+
+    - name: Install nodejs, git, make
+      apt: pkg={{ item }} state=present force=yes
+      with_items:
+       - nodejs
        - git
+       - make
 
     - name: Install bower & yarn
       npm: name={{ item }} global=yes state=present
