@@ -118,7 +118,7 @@
       when: node_repo.changed
 
     - name: Install nodejs, git, make
-      apt: pkg={{ item }} state=present force=yes
+      apt: pkg={{ item }} state=present
       with_items:
        - nodejs
        - git
