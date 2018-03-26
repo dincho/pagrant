@@ -47,6 +47,7 @@ pagrant:
       - var/*
       - app/cache/*
       - app/bootstrap*
+      - web/dist/*
       - web/uploads/*
       - web/bundles/*
       - public/uploads/*
