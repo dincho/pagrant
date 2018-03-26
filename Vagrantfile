@@ -45,6 +45,7 @@ Vagrant.configure(2) do |config|
         "app/logs/*",
         "app/cache/*",
         "app/bootstrap*",
+        "web/dist/*",
         "web/uploads/*",
         "web/bundles/*",
         "public/uploads/*",
