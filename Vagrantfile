@@ -31,6 +31,11 @@ Vagrant.configure(2) do |config|
 
   user_config = {
     "hostname" => PROJECT_NAME + ".local",
+    "boxes" => {
+      "virtualbox" => "bento/ubuntu-16.04",
+      "parallels" => "parallels/ubuntu-16.04",
+      "hyperv" => "kmm/ubuntu-xenial64",
+    },
     "cpus" => cpus,
     "mem" => mem,
     "max_mem" => false,
@@ -77,14 +82,14 @@ Vagrant.configure(2) do |config|
       rsync__exclude: user_config["sync"]["exclude"]
 
     node.vm.provider "virtualbox" do |vm, override|
-      override.vm.box = "bento/ubuntu-16.04"
+      override.vm.box = user_config["boxes"]["virtualbox"]
       vm.name = node.vm.hostname
       vm.cpus = user_config["cpus"]
       vm.memory = user_config["mem"]
     end
 
     node.vm.provider "parallels" do |vm, override|
-      override.vm.box = "parallels/ubuntu-16.04"
+      override.vm.box = user_config["boxes"]["parallels"]
       vm.name = node.vm.hostname
       vm.cpus = user_config["cpus"]
       vm.memory = user_config["mem"]
@@ -92,7 +97,7 @@ Vagrant.configure(2) do |config|
     end
 
     node.vm.provider "hyperv" do |vm, override|
-      override.vm.box = "kmm/ubuntu-xenial64"
+      override.vm.box = user_config["boxes"]["hyperv"]
       vm.vmname = node.vm.hostname
       vm.cpus = user_config["cpus"]
       vm.memory = user_config["mem"]

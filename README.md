@@ -95,6 +95,17 @@ pagrant:
   differencing_disk: false # hyper-v only, defaults to true
 ```
 
+### Change the default box
+
+You can override the default boxes used by vagrant in `.vagrantuser` under `boxes` section.
+```yml
+pagrant:
+  boxes:
+    virtualbox: 'bento/ubuntu-16.04'
+    parallels: 'parallels/ubuntu-16.04'
+    hyperv: 'kmm/ubuntu-xenial64'
+```
+
 ### Override Ansible vars
 
 Default configuration is optimal for common use but you are able to tweak the provisioning by passing certain vars that are used in Ansbile roles and tasks.
