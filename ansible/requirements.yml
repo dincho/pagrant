@@ -1,12 +1,20 @@
+# Always use GitHub `src` otherwise it get's pulled from Ansible Galaxy repository,
+# but it's totally broken (out of sync tags and slow)
 - name: nbz4live.php-fpm
+  src: https://github.com/NBZ4live/ansible-php-fpm
   version: '2.0.9'
-- src: jdauphant.nginx
+- name: jdauphant.nginx
+  src: https://github.com/jdauphant/ansible-role-nginx
   version: 'v2.9'
-- src: jdauphant.ssl-certs
+- name: jdauphant.ssl-certs
+  src: https://github.com/jdauphant/ansible-role-ssl-certs
   version: 'v1.4'
-- src: dincho.percona-server
+- name: dincho.percona-server
+  src: https://github.com/dincho/ansible-percona-server
   version: '2.0.0'
-- src: dincho.elasticsearch
+- name: dincho.elasticsearch
+  src: https://github.com/dincho/ansible-elasticsearch
   version: '2.0.0'
-- src: kosssi.composer
+- name: kosssi.composer
+  src: https://github.com/kosssi/ansible-role-composer
   version: 'v1.6.1'
