@@ -39,7 +39,7 @@ Vagrant.configure(2) do |config|
     "cpus" => cpus,
     "mem" => mem,
     "max_mem" => false,
-    "differencing_disk" => true,
+    "linked_clone" => true,
     "sync" => {
       "type" => "rsync",
       "exclude" => [
@@ -86,6 +86,7 @@ Vagrant.configure(2) do |config|
       vm.name = node.vm.hostname
       vm.cpus = user_config["cpus"]
       vm.memory = user_config["mem"]
+      vm.linked_clone = user_config["linked_clone"]
     end
 
     node.vm.provider "parallels" do |vm, override|
@@ -102,7 +103,7 @@ Vagrant.configure(2) do |config|
       vm.cpus = user_config["cpus"]
       vm.memory = user_config["mem"]
       vm.maxmemory = user_config["max_mem"]
-      vm.differencing_disk = user_config["differencing_disk"]
+      vm.linked_clone = user_config["linked_clone"]
     end
 
     config.vm.provision 'Stop unattended-upgrades', type: 'shell',
