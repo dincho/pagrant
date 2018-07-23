@@ -74,11 +74,6 @@ Vagrant.configure(2) do |config|
   user_config["extra_vars"]["project_path"] = user_config["project_path"]
   user_config["extra_vars"]["composer_github_oauth"] = user_config["github"]["oauth_token"]
 
-  # override with a deprecated option (since vagrant 2.1.2)
-  if defined? user_config["differencing_disk"] == nil
-    user_config["linked_clone"] = user_config["differencing_disk"]
-  end
-
   config.vm.network "private_network", type: "dhcp"
   config.vm.define "dev", primary: true do |node|
     node.vm.hostname = user_config["hostname"]
@@ -91,9 +86,7 @@ Vagrant.configure(2) do |config|
       vm.name = node.vm.hostname
       vm.cpus = user_config["cpus"]
       vm.memory = user_config["mem"]
-      if Vagrant::VERSION >= '2.1.2'
-        vm.linked_clone = user_config["linked_clone"]
-      end
+      vm.linked_clone = user_config["linked_clone"]
     end
 
     node.vm.provider "parallels" do |vm, override|
@@ -110,20 +103,14 @@ Vagrant.configure(2) do |config|
       vm.cpus = user_config["cpus"]
       vm.memory = user_config["mem"]
       vm.maxmemory = user_config["max_mem"]
-      if Vagrant::VERSION >= '2.1.2'
-      	vm.linked_clone = user_config["linked_clone"]
-      else
-      	vm.differencing_disk = user_config["linked_clone"]
-      end
+      vm.linked_clone = user_config["linked_clone"]
     end
 
     config.vm.provision 'Stop unattended-upgrades', type: 'shell',
         path: './ansible/apt-kill.sh'
 
     node.vm.provision "ansible_local" do |ansible|
-      if Vagrant::VERSION >= '2.0'
-        ansible.compatibility_mode = "2.0"
-      end
+      ansible.compatibility_mode = "2.0"
       ansible.provisioning_path = "/vagrant/ansible"
       ansible.galaxy_role_file = "requirements.yml"
       ansible.playbook = "setup.yml"
