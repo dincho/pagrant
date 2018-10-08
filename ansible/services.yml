@@ -123,6 +123,7 @@
           - nodejs
           - git
           - make
+          - unzip
         state: present
 
     - name: Install bower & yarn
