@@ -2,10 +2,10 @@
 # but it's totally broken (out of sync tags and slow)
 - name: nbz4live.php-fpm
   src: https://github.com/NBZ4live/ansible-php-fpm
-  version: '2.0.9'
+  version: '2.0.10'
 - name: jdauphant.nginx
   src: https://github.com/jdauphant/ansible-role-nginx
-  version: 'v2.9'
+  version: 'v2.20.0'
 - name: jdauphant.ssl-certs
   src: https://github.com/jdauphant/ansible-role-ssl-certs
   version: 'v1.4'

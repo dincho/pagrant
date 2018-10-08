@@ -34,7 +34,7 @@ Vagrant.configure(2) do |config|
     "boxes" => {
       "virtualbox" => "bento/ubuntu-16.04",
       "parallels" => "parallels/ubuntu-16.04",
-      "hyperv" => "kmm/ubuntu-xenial64",
+      "hyperv" => "bento/ubuntu-16.04",
     },
     "cpus" => cpus,
     "mem" => mem,
@@ -55,7 +55,7 @@ Vagrant.configure(2) do |config|
         "public/uploads/*",
         "public/bundles/*",
         "bower_components/",
-        "node_modules/*"
+        "node_modules/"
       ]
     },
     "project_path" => "/app",
