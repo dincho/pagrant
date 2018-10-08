@@ -3,4 +3,5 @@
 #  config.vm.provision 'Stop unattended-upgrades', type: 'shell', path: './ansible/apt-kill.sh'
 
 systemctl stop apt-daily.service
-systemctl kill --kill-who=all apt-daily.service
+systemctl is-active --quiet apt-daily.service && systemctl kill --kill-who=all apt-daily.service
+exit 0

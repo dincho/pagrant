@@ -34,7 +34,7 @@ Vagrant.configure(2) do |config|
     "boxes" => {
       "virtualbox" => "bento/ubuntu-16.04",
       "parallels" => "parallels/ubuntu-16.04",
-      "hyperv" => "kmm/ubuntu-xenial64",
+      "hyperv" => "bento/ubuntu-16.04",
     },
     "cpus" => cpus,
     "mem" => mem,
