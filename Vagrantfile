@@ -55,7 +55,7 @@ Vagrant.configure(2) do |config|
         "public/uploads/*",
         "public/bundles/*",
         "bower_components/",
-        "node_modules/*"
+        "node_modules/"
       ]
     },
     "project_path" => "/app",
