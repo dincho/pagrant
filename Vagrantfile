@@ -31,6 +31,7 @@ Vagrant.configure(2) do |config|
 
   user_config = {
     "hostname" => PROJECT_NAME + ".local",
+    "hostname_aliases" => [],
     "boxes" => {
       "virtualbox" => "bento/ubuntu-16.04",
       "parallels" => "parallels/ubuntu-16.04",
@@ -119,6 +120,7 @@ Vagrant.configure(2) do |config|
 
     if Vagrant.has_plugin?("HostManager")
         node.vm.post_up_message = "Project URL: http://" + user_config["hostname"] + "/"
+        node.hostmanager.aliases = user_config["hostname_aliases"]
     end
   end
 end
