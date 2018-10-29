@@ -31,7 +31,7 @@ vagrant plugin install nugrant
 
 To provide configuration that is shared by all your projects create `<user_home_path>/.vagrantuser`. For different OS'es `<user_home_path>` varies.
 
-E.g. for MacOS/OSx it is `~/.vagrantuser`, for Windows it should be something like `C:\Users\your_username\.vagrantuser`
+E.g. for MacOS/OSx it is `~/.vagrantuser`, for Windows it should be `%USERPROFILE%\.vagrantuser` (something like `C:\Users\your_username\.vagrantuser`)
 
 ```yml
 pagrant:
@@ -64,6 +64,10 @@ E.g. To customize sync exclusions create `/cool_project/vagrant/.vagrantuser`:
 ```yml
 pagrant:
   hostname: cool_project.local # defaults to <project_name>.local
+  hostname_aliases:  # Additional domains to add to hosts. Defaults to []
+    - project.local
+    - project.test
+    - subdomain.project.test
   project_path: /app # Absolute path of your project root. Default is '/app'
  # For a symfony flex app
   sync:
@@ -139,6 +143,13 @@ to automatically update your hosts file. This way you can access your project by
 vagrant plugin install vagrant-hostmanager
 ```
 
+To force update of `hosts` file while machine is running use:
+
+```bash
+vagrant hostmanager
+```
+
+This also allows you to change `hostname` and `hostname_aliases` at any time without restart.
 
 ## Ansible tasks per project
 
