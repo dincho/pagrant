@@ -136,12 +136,12 @@ Notes:
 
 ### Override Ansible roles
 
-You can override the existing roles by creating your own requirements file and linking it via `role_file` key in the config.
+You can override the existing roles by creating your own requirements file and linking it via `galaxy_role_file` key in the config.
 We suggest using the root directory of your project.
 
 ```yml
 pagrant:
-  "role_file" => "/app/ansible_requirements_dev.yml", # Absolute path to custom requirements. Default is 'requirements.yml'.
+  "galaxy_role_file" => "/app/ansible_requirements_dev.yml", # Absolute path to custom requirements. Default is 'requirements.yml'.
 ```
 
 Notes: 
