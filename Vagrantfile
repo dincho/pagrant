@@ -37,6 +37,7 @@ Vagrant.configure(2) do |config|
       "parallels" => "parallels/ubuntu-16.04",
       "hyperv" => "bento/ubuntu-16.04",
     },
+    "role_file" => "requirements.yml",
     "cpus" => cpus,
     "mem" => mem,
     "max_mem" => false,
@@ -113,7 +114,7 @@ Vagrant.configure(2) do |config|
     node.vm.provision "ansible_local" do |ansible|
       ansible.compatibility_mode = "2.0"
       ansible.provisioning_path = "/vagrant/ansible"
-      ansible.galaxy_role_file = "requirements.yml"
+      ansible.galaxy_role_file = user_config["role_file"]
       ansible.playbook = "setup.yml"
       ansible.extra_vars = user_config["extra_vars"]
     end
