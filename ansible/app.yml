@@ -11,11 +11,6 @@
     - { role: kosssi.composer, become: true }
 
   tasks:
-    - name: Set default PHP version
-      command: >
-        update-alternatives --set php /usr/bin/php{{ php_fpm_version }}
-      become: yes
-
     - name: "Add {{ extra_path }} to path"
       lineinfile:
         dest: ~/.profile

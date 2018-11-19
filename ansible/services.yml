@@ -99,6 +99,10 @@
     - dincho.elasticsearch
 
   tasks:
+    - name: Set default PHP version
+      command: >
+        update-alternatives --set php /usr/bin/php{{php_fpm_version}}
+
     - name: Add NodeSource apt key
       apt_key:
         url: "https://deb.nodesource.com/gpgkey/nodesource.gpg.key"
