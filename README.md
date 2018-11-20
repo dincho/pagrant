@@ -134,6 +134,20 @@ Notes:
 
 **Warning: If you change `php_fpm_version` and reprovision with `vagrant reload --provision` you will end up with multiple php versions installed. Nginx will be reconfigured to use the updated `php_fpm_version`**
 
+### Override Ansible roles
+
+You can override the existing roles by creating your own requirements file and linking it via `galaxy_role_file` key in the config.
+We suggest using the root directory of your project.
+
+```yml
+pagrant:
+  "galaxy_role_file" => "/app/ansible_requirements_dev.yml", # Absolute path to custom requirements. Default is 'requirements.yml'.
+```
+
+Notes: 
+
+ * The roles defined in [requirements.yml](https://github.com/dincho/pagrant/blob/master/ansible/requirements.yml) are mandatory. You can change their versions if needed.
+
 ## Suggestions
 
 It is recommended to install [vagrant-hostmanager](https://github.com/devopsgroup-io/vagrant-hostmanager) plugin
