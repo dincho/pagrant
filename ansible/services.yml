@@ -99,7 +99,7 @@
     - dincho.elasticsearch
 
   tasks:
-    - name: Set default PHP version
+    - name: Set default PHP version to {{php_fpm_version}}
       command: >
         update-alternatives --set php /usr/bin/php{{php_fpm_version}}
 
