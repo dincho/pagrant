@@ -14,7 +14,7 @@ LEMP Vagrant configuration
 
 ```bash
 cd <path_to_project>
-git submodule add git@github.com:dincho/pagrant.git vagrant
+git submodule add https://github.com/dincho/pagrant.git vagrant
 cd vagrant
 vagrant up
 ```
