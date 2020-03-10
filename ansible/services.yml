@@ -14,6 +14,18 @@
 
     nodejs_version: '6.x'
 
+    has_npm: true
+
+    apt_packages:
+      - nodejs
+      - git
+      - make
+      - unzip
+
+    npm_packages:
+      - bower
+      - yarn
+
     php_fpm_version: '7.1'
     php_fpm_apt_packages:
       - php{{php_fpm_version}}-fpm
@@ -123,16 +135,10 @@
 
     - name: Install nodejs, git, make
       apt:
-        pkg:
-          - nodejs
-          - git
-          - make
-          - unzip
-          - npm
+        pkg: "{{ apt_packages }}"
         state: present
 
     - name: Install bower & yarn
       npm: name={{ item }} global=yes state=present
-      with_items:
-       - bower
-       - yarn
+      with_items: "{{ npm_packages }}"
+      when: has_npm
