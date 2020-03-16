@@ -6,8 +6,6 @@
     project_path: /app
     bower_path: bower
     extra_path: ./vendor/bin
-    has_bower: true
-    has_composer: true
 
   roles:
     - { role: kosssi.composer, become: true }
@@ -42,7 +40,7 @@
       args:
         chdir: "{{ project_path }}"
         creates: "{{ project_path }}/bower_components"
-      when: has_bower and bower_json.stat.exists == True
+      when: bower_json.stat.exists == True
 
     - name: Stat composer.lock
       stat: path="{{ project_path }}/composer.lock"
@@ -53,7 +51,7 @@
         {{ composer_path }} install --no-interaction
       args:
         chdir: "{{ project_path }}"
-      when: has_composer and composer_lock.stat.exists == True
+      when: composer_lock.stat.exists == True
 
     - name: "Stat {{ project_path }}/ansible_dev.yml"
       stat: path="{{ project_path }}/ansible_dev.yml"
