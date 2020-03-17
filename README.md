@@ -123,13 +123,6 @@ pagrant:
     php_fpm_version: '7.2' # Define the PHP version. Default is '7.1'.
     nodejs_version: '8.x' # Define the NodeJS major version. Default is '6.x'.
     nginx_sites_default_root: /app/public # Absolute path of the public dir. Default is '/app/web'.
-    apt_packages:
-      pkg:
-        - npm
-        - ...
-    npm_packages:
-        - yarn
-        - ...
 ```
 
 Notes:
@@ -141,6 +134,25 @@ Notes:
 
 **Warning: If you change `php_fpm_version` and reprovision with `vagrant reload --provision` you will end up with multiple php versions installed. Nginx will be reconfigured to use the updated `php_fpm_version`**
 
+### Override package dependencies
+
+The apt and npm packages listed below are required by pagrant (by dafault). This configuration allows you to add your own, if they are needed before other pagrant tasks are executed.
+
+```yml
+pagrant:
+  extra_vars:
+    apt_packages:
+      pkg:
+        - nodejs
+        - git
+        - make
+        - unzip
+    
+    npm_packages:
+      - bower
+      - yarn
+```
+
 ### Override Ansible roles
 
 You can override the existing roles by creating your own requirements file and linking it via `galaxy_role_file` key in the config.
@@ -148,7 +160,7 @@ We suggest using the root directory of your project.
 
 ```yml
 pagrant:
-  "galaxy_role_file" => "/app/ansible_requirements_dev.yml", # Absolute path to custom requirements. Default is 'requirements.yml'.
+  galaxy_role_file: "/app/ansible_requirements_dev.yml", # Absolute path to custom requirements. Default is 'requirements.yml'.
 ```
 
 Notes: 
