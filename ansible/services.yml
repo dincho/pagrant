@@ -15,7 +15,7 @@
     nodejs_version: '6.x'
 
     apt_packages:
-      pkg:
+      - pkg:
         - nodejs
         - git
         - make
