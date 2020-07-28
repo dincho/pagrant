@@ -120,6 +120,7 @@ E.g. for a Symfony flex project `/cool_project/vagrant/.vagrantuser`:
 ```yml
 pagrant:
   extra_vars:
+    composer_version: '1.10.9' # Defines the Composer version.
     php_fpm_version: '7.2' # Define the PHP version. Default is '7.1'.
     nodejs_version: '8.x' # Define the NodeJS major version. Default is '6.x'.
     nginx_sites_default_root: /app/public # Absolute path of the public dir. Default is '/app/web'.

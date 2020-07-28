@@ -15,6 +15,6 @@
 - name: dincho.elasticsearch
   src: https://github.com/dincho/ansible-elasticsearch
   version: '2.0.0'
-- name: kosssi.composer
-  src: https://github.com/kosssi/ansible-role-composer
-  version: 'v1.6.1'
+- name: geerlingguy.composer
+  src: https://github.com/geerlingguy/ansible-role-composer
+  version: '1.7.6'
