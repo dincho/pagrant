@@ -6,9 +6,12 @@
     project_path: /app
     bower_path: bower
     extra_path: ./vendor/bin
+    composer_version: 1.10.9
+    composer_project_path: "{{ project_path }}"
+    composer_github_oauth_token: "{{ composer_github_oauth|default('') }}"
 
   roles:
-    - { role: kosssi.composer, become: true }
+    - { role: geerlingguy.composer, become: true }
 
   tasks:
     - name: "Add {{ extra_path }} to path"
@@ -24,11 +27,6 @@
         dest: ~/.profile
         state: present
         line: 'cd {{ project_path }}'
-
-    - name: Add composer github token
-      command: >
-        {{ composer_path }} config --global github-oauth.github.com {{ composer_github_oauth }}
-      when: composer_github_oauth != "" and composer_github_oauth != false
 
     - name: Stat bower.json
       stat: path="{{ project_path }}/bower.json"
