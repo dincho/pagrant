@@ -142,7 +142,7 @@ The apt and npm packages listed below are required by pagrant (by dafault). This
 pagrant:
   extra_vars:
     apt_packages:
-      pkg:
+      - pkg:
         - nodejs
         - git
         - make
