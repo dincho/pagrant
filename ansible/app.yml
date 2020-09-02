@@ -9,6 +9,9 @@
     composer_version: 1.10.9
     composer_project_path: "{{ project_path }}"
     composer_github_oauth_token: "{{ composer_github_oauth|default('') }}"
+    composer_home_owner: vagrant
+    composer_home_group: vagrant
+    composer_home_path: /home/vagrant/.composer
 
   roles:
     - { role: geerlingguy.composer, become: true }
