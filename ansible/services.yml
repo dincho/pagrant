@@ -17,6 +17,7 @@
     apt_packages:
       - pkg:
         - nodejs
+        - npm
         - git
         - make
         - unzip
