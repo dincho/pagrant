@@ -46,7 +46,7 @@
       - php{{php_fpm_version}}-pgsql
       - php{{php_fpm_version}}-tidy
       - php{{php_fpm_version}}-phpdbg
-      - php-ast
+      - php{{php_fpm_version}}-ast
 
     php_fpm_pools:
       - name: "default{{php_fpm_version}}"
